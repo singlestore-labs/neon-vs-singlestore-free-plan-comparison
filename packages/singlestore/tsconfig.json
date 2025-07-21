@@ -1,0 +1,9 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "paths": {
+      "@repo/singlestore/*": ["./*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}

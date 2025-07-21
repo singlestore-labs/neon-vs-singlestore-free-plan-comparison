@@ -1,0 +1,18 @@
+import type {
+  transactionRecordSchema,
+  transactionStatusRecordSchema,
+  transactionStatusValuesSchema,
+  transactionTypeRecordSchema,
+  transactionTypeValuesSchema,
+  transactionValuesSchema,
+} from "@repo/neon/transaction/schema";
+import type { z } from "zod/v4";
+
+export type TransactionRecord = z.infer<typeof transactionRecordSchema>;
+export type TransactionValues = z.infer<typeof transactionValuesSchema>;
+
+export type TransactionStatusRecord = z.infer<typeof transactionStatusRecordSchema>;
+export type TransactionStatusValues = z.infer<typeof transactionStatusValuesSchema>;
+
+export type TransactionTypeRecord = z.infer<typeof transactionTypeRecordSchema>;
+export type TransactionTypeValues = z.infer<typeof transactionTypeValuesSchema>;
