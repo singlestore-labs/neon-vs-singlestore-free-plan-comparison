@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { createReadStream, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -10,6 +10,8 @@ const pemPath = resolve(__dirname, "singlestore_bundle.pem");
 
 const pool = mysql.createPool({
   uri: process.env.SINGLESTORE_DB_URL!,
+  infileStreamFactory: (path) => createReadStream(path),
+  multipleStatements: true,
   ssl: {
     ca: readFileSync(pemPath, "utf-8").trim(),
   },

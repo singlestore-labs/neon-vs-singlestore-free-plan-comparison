@@ -6,6 +6,7 @@
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
     "push": "drizzle-kit push",
+    "data:load": "dotenv -- tsx ./scripts/load-data.ts",
     "lint": "eslint .",
     "check-types": "tsc --noEmit"
   },
@@ -21,6 +22,7 @@
     "@repo/types": "*",
     "@repo/typescript-config": "*",
     "@types/node": "^24.0.12",
+    "dotenv-cli": "^8.0.0",
     "drizzle-kit": "^0.31.4"
   }
 }
