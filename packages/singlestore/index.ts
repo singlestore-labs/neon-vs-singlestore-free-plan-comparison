@@ -1,13 +1,18 @@
 import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { drizzle } from "drizzle-orm/singlestore";
+import mysql from "mysql2/promise";
 
-export const singlestore = drizzle({
-  connection: {
-    uri: process.env.SINGLESTORE_DB_URL!,
-    ssl: {
-      ca: readFileSync(resolve("./singlestore_bundle.pem"), "utf-8"),
-    },
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const pemPath = resolve(__dirname, "singlestore_bundle.pem");
+
+const pool = mysql.createPool({
+  uri: process.env.SINGLESTORE_DB_URL!,
+  ssl: {
+    ca: readFileSync(pemPath, "utf-8").trim(),
   },
 });
+
+export const singlestore = drizzle({ client: pool });

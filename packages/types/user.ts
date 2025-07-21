@@ -1,5 +1,11 @@
-import type * as neon from "@repo/neon/user/types";
-import type * as singlestore from "@repo/singlestore/user/types";
+import type { Optional } from "@repo/types/utils";
 
-export type UserRecord = neon.UserRecord | singlestore.UserRecord;
-export type UserValues = neon.UserValues | singlestore.UserValues;
+export type UserRecord = {
+  id: number;
+  name: string | null;
+  email: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type UserValues = Optional<UserRecord, "name" | "email" | "createdAt" | "updatedAt">;

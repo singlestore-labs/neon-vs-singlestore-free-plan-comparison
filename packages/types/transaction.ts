@@ -1,11 +1,27 @@
-import type * as neon from "@repo/neon/transaction/types";
-import type * as singlestore from "@repo/singlestore/transaction/types";
+import type { Optional } from "@repo/types/utils";
 
-export type TransactionRecord = neon.TransactionRecord | singlestore.TransactionRecord;
-export type TransactionValues = neon.TransactionValues | singlestore.TransactionValues;
+export type TransactionTypeRecord = {
+  id: number;
+  name: string;
+};
 
-export type TransactionTypeRecord = neon.TransactionTypeRecord | singlestore.TransactionTypeRecord;
-export type TransactionTypeValues = neon.TransactionTypeValues | singlestore.TransactionTypeValues;
+export type TransactionTypeValues = TransactionTypeRecord;
 
-export type TransactionStatusRecord = neon.TransactionStatusRecord | singlestore.TransactionStatusRecord;
-export type TransactionStatusValues = neon.TransactionStatusValues | singlestore.TransactionStatusValues;
+export type TransactionStatusRecord = {
+  id: number;
+  name: string;
+};
+
+export type TransactionStatusValues = TransactionStatusRecord;
+
+export type TransactionRecord = {
+  id: number;
+  accountIdFrom: number | null;
+  accountIdTo: number | null;
+  typeId: TransactionTypeRecord["id"];
+  statusId: TransactionStatusRecord["id"];
+  amount: string | null;
+  createdAt: Date;
+};
+
+export type TransactionValues = Optional<TransactionRecord, "accountIdFrom" | "accountIdTo" | "amount" | "createdAt">;

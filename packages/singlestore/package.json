@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
+    "@repo/types": "*",
     "@repo/typescript-config": "*",
     "@types/node": "^24.0.12",
     "drizzle-kit": "^0.31.4"

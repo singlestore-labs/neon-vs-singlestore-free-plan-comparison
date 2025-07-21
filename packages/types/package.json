@@ -8,8 +8,6 @@
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
-    "@repo/neon": "*",
-    "@repo/singlestore": "*",
     "@repo/typescript-config": "*"
   }
 }

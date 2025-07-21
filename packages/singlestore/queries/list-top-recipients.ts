@@ -1,8 +1,9 @@
 import { singlestore } from "@repo/singlestore";
-import { transactionsTable, transactionStatusesTable, transactionTypesTable } from "@repo/singlestore/transaction/schema";
+import { transactionsTable, transactionStatusesTable, transactionTypesTable } from "@repo/singlestore/schemas/transaction";
+import type { ListTopRecipientsResult } from "@repo/types/queries";
 import { and, asc, count, desc, eq, sql } from "drizzle-orm";
 
-export async function listTopRecipients() {
+export async function listTopRecipients(): Promise<ListTopRecipientsResult> {
   const result = await singlestore
     .select({
       accountId: transactionsTable.accountIdTo,

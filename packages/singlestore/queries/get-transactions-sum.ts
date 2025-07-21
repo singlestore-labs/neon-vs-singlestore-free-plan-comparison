@@ -1,10 +1,11 @@
-import { neon } from "@repo/neon";
-import { transactionsTable, transactionStatusesTable } from "@repo/neon/transaction/schema";
+import { singlestore } from "@repo/singlestore";
+import { transactionsTable, transactionStatusesTable } from "@repo/singlestore/schemas/transaction";
+import type { GetTransactionsSumResult } from "@repo/types/queries";
 import { subDays } from "date-fns";
 import { and, eq, gt, sum } from "drizzle-orm";
 
-export async function getTransactionsSum() {
-  const result = await neon
+export async function getTransactionsSum(): Promise<GetTransactionsSumResult> {
+  const result = await singlestore
     .select({ sum: sum(transactionsTable.amount) })
     .from(transactionsTable)
     .innerJoin(transactionStatusesTable, eq(transactionStatusesTable.id, transactionsTable.statusId))

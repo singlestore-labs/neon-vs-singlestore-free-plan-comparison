@@ -1,12 +1,13 @@
-import { neon } from "@repo/neon";
-import { accountsTable } from "@repo/neon/account/schema";
-import { transactionsTable, transactionTypesTable } from "@repo/neon/transaction/schema";
-import { usersTable } from "@repo/neon/user/schema";
+import { singlestore } from "@repo/singlestore";
+import { accountsTable } from "@repo/singlestore/schemas/account";
+import { transactionsTable, transactionTypesTable } from "@repo/singlestore/schemas/transaction";
+import { usersTable } from "@repo/singlestore/schemas/user";
+import type { ListRecentTransactionsWithInfoResult } from "@repo/types/queries";
 import { subDays } from "date-fns";
 import { desc, eq, gte } from "drizzle-orm";
 
-export async function listRecentTransactionsWithInfo() {
-  const result = await neon
+export async function listRecentTransactionsWithInfo(): Promise<ListRecentTransactionsWithInfoResult> {
+  const result = await singlestore
     .select({
       userId: usersTable.id,
       accountId: accountsTable.id,

@@ -1,5 +1,11 @@
-import type * as neon from "@repo/neon/account/types";
-import type * as singlestore from "@repo/singlestore/account/types";
+import type { Optional } from "@repo/types/utils";
 
-export type AccountRecord = neon.AccountRecord | singlestore.AccountRecord;
-export type AccountValues = neon.AccountValues | singlestore.AccountValues;
+export type AccountRecord = {
+  id: number;
+  userId: number;
+  balance: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type AccountValues = Optional<AccountRecord, "balance" | "createdAt" | "updatedAt">;

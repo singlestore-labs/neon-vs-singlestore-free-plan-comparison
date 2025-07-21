@@ -1,3 +1,3 @@
-export { accountsTable } from "@repo/singlestore/account/schema";
-export { transactionsTable, transactionStatusesTable, transactionTypesTable } from "@repo/singlestore/transaction/schema";
-export { usersTable } from "@repo/singlestore/user/schema";
+export { accountsTable } from "@repo/singlestore/schemas/account";
+export { transactionsTable, transactionStatusesTable, transactionTypesTable } from "@repo/singlestore/schemas/transaction";
+export { usersTable } from "@repo/singlestore/schemas/user";
