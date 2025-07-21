@@ -10,7 +10,7 @@ import type { UserRecord } from "@repo/types/user";
 const NOW = new Date();
 const USERS_NUMBER = 10;
 const ACCOUNTS_NUMBER = 10;
-const TRANSACTIONS_NUMBER = 10_000_000;
+const TRANSACTIONS_NUMBER = 3_500_000;
 
 const EXPORT_PATH = "./export";
 const CHUNK_SIZE = 1_000_000;

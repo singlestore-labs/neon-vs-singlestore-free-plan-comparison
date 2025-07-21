@@ -11,17 +11,19 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^1.0.1",
     "date-fns": "^4.1.0",
     "dotenv": "^17.2.0",
     "drizzle-orm": "^0.44.3",
-    "drizzle-zod": "^0.8.2"
+    "drizzle-zod": "^0.8.2",
+    "pg": "^8.16.3",
+    "pg-copy-streams": "^7.0.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/types": "*",
     "@repo/typescript-config": "*",
     "@types/node": "^24.0.12",
+    "@types/pg-copy-streams": "^1.2.5",
     "dotenv-cli": "^8.0.0",
     "drizzle-kit": "^0.31.4"
   }

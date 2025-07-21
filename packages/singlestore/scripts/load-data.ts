@@ -25,6 +25,8 @@ const ENTITIES = [
     );
 
     for (const { tableName, filePrefix } of ENTITIES) {
+      await singlestore.execute(sql.raw(`TRUNCATE ${tableName};`));
+
       for (let i = 1; ; i++) {
         const dataFilePath = join(DATA_PATH, `${filePrefix}-${i}.csv`);
         if (!existsSync(dataFilePath)) break;
