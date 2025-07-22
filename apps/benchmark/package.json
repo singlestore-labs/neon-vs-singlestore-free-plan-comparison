@@ -11,15 +11,19 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@tailwindcss/postcss": "^4.1.11",
+    "glob": "^11.0.3",
     "next": "^15.4.2",
+    "pretty-ms": "^9.2.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
+    "@repo/benchmark": "*",
     "@repo/eslint-config": "*",
     "@repo/types": "*",
     "@repo/typescript-config": "*",
+    "@repo/ui": "*",
+    "@tailwindcss/postcss": "^4.1.11",
     "@types/node": "^24.1.0",
     "@types/react": "19.1.8",
     "@types/react-dom": "19.1.6",

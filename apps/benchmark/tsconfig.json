@@ -5,6 +5,14 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", "next.config.js", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    "next.config.js",
+    ".next/types/**/*.ts",
+    "../../packages/ui/**/*.ts",
+    "../../packages/ui/**/*.tsx"
+  ],
+  "exclude": ["node_modules", "../../packages/**/node_modules"]
 }
