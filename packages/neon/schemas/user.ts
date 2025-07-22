@@ -1,5 +1,4 @@
 import { bigint, pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 export const usersTable = pgTable("users", {
   id: bigint({ mode: "number" }).primaryKey(),
@@ -11,6 +10,3 @@ export const usersTable = pgTable("users", {
     .defaultNow()
     .$onUpdate(() => new Date()),
 });
-
-export const userRecordSchema = createSelectSchema(usersTable);
-export const userValuesSchema = createInsertSchema(usersTable);

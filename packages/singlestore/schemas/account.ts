@@ -1,5 +1,4 @@
 import { bigint, decimal, singlestoreTable, timestamp } from "drizzle-orm/singlestore-core";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 export const accountsTable = singlestoreTable("accounts", {
   id: bigint({ mode: "number" }).primaryKey(),
@@ -8,6 +7,3 @@ export const accountsTable = singlestoreTable("accounts", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow().onUpdateNow(),
 });
-
-export const accountRecordSchema = createSelectSchema(accountsTable);
-export const accountValuesSchema = createInsertSchema(accountsTable);
