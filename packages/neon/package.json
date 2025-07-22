@@ -7,6 +7,7 @@
     "migrate": "drizzle-kit migrate",
     "push": "drizzle-kit push",
     "data:load": "dotenv -- tsx ./scripts/load-data.ts",
+    "benchmark:run": "dotenv -- tsx ./scripts/run-benchmark.ts",
     "lint": "eslint .",
     "check-types": "tsc --noEmit"
   },
@@ -22,7 +23,8 @@
     "@repo/eslint-config": "*",
     "@repo/types": "*",
     "@repo/typescript-config": "*",
-    "@types/node": "^24.0.12",
+    "@types/benchmark": "*",
+    "@types/node": "^24.1.0",
     "@types/pg-copy-streams": "^1.2.5",
     "dotenv-cli": "^8.0.0",
     "drizzle-kit": "^0.31.4"
