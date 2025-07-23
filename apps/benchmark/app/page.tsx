@@ -92,7 +92,9 @@ export default async function PageHome() {
                 </div>
 
                 <div>
-                  <div className="grid items-center gap-4 text-end md:grid-cols-[1fr_8rem]">
+                  <div className="group relative grid items-center gap-4 text-end md:grid-cols-[1fr_8rem]">
+                    <span className="bg-primary/10 absolute top-1/2 left-1/2 hidden h-[calc(100%_+_theme(spacing.1))] w-[calc(100%_+_theme(spacing.4))] -translate-1/2 rounded-sm group-hover:block" />
+
                     <ResultBar
                       variant={result.title.startsWith("SingleStore") ? "primary" : "default"}
                       value={avgTime}
@@ -111,8 +113,9 @@ export default async function PageHome() {
                       return (
                         <li
                           key={queryKey}
-                          className="grid gap-4 md:grid-cols-[10rem_1fr]"
+                          className="group relative grid gap-4 md:grid-cols-[10rem_1fr]"
                         >
+                          <span className="bg-primary/10 absolute top-1/2 left-1/2 hidden h-[calc(100%_+_theme(spacing.1))] w-[calc(100%_+_theme(spacing.4))] -translate-1/2 rounded-xs group-hover:block" />
                           <span>{QUERY_TITLE_MAP[queryKey as keyof typeof QUERY_TITLE_MAP]}</span>
                           <div className="grid items-center gap-4 text-end md:grid-cols-[1fr_8rem]">
                             <ResultBar

@@ -7,7 +7,7 @@
     "migrate": "drizzle-kit migrate",
     "push": "drizzle-kit push",
     "data:load": "dotenv -- tsx ./scripts/load-data.ts",
-    "benchmark:run": "dotenv -- tsx ./scripts/run-benchmark.ts",
+    "benchmark:start": "dotenv -- tsx ./scripts/run-benchmark.ts",
     "lint": "eslint .",
     "check-types": "tsc --noEmit"
   },

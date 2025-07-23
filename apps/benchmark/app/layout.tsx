@@ -23,7 +23,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       className={cn(font.className, "dark")}
       suppressHydrationWarning
     >
-      <body className="text-foreground bg-background flex min-h-screen flex-col">
+      <body className="text-foreground bg-background flex min-h-screen flex-col gap-y-8">
         <header className="container mx-auto mt-8 px-4">
           <Card>
             <CardContent className="flex justify-between gap-4">
@@ -37,7 +37,19 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </Card>
         </header>
 
-        <main className="container mx-auto mt-8 flex-1 px-4 pb-4">{children}</main>
+        <main className="container mx-auto flex-1 px-4">{children}</main>
+
+        <footer className="text-muted-foreground container mx-auto px-4 text-sm">
+          <div className="flex items-center justify-center py-8">
+            <Link
+              href="https://github.com/singlestore-labs/neon-vs-singlestore-free-plan-comparison"
+              className="hover:text-foreground hover:underline"
+              target="_blank"
+            >
+              GitHub Repository
+            </Link>
+          </div>
+        </footer>
       </body>
     </html>
   );

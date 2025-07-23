@@ -1,12 +1,24 @@
-import type { BenchmarkQueries } from "@repo/benchmark/types";
+import type { BenchmarkQueries, BenchmarkTableRowCountQuery } from "@repo/benchmark/types";
 import { singlestore } from "@repo/singlestore/index";
+import * as schema from "@repo/singlestore/schema";
 import { accountsTable } from "@repo/singlestore/schemas/account";
 import { transactionsTable, transactionStatusesTable, transactionTypesTable } from "@repo/singlestore/schemas/transaction";
 import { usersTable } from "@repo/singlestore/schemas/user";
 import { subDays } from "date-fns";
 import { and, asc, count, desc, eq, gt, gte, sql, sum } from "drizzle-orm";
 
-export const benchmarkQueries: BenchmarkQueries = {
+export const tableRowCountQuery: BenchmarkTableRowCountQuery = async () => {
+  const result: Awaited<ReturnType<BenchmarkTableRowCountQuery>> = {};
+
+  for (const [name, table] of Object.entries(schema)) {
+    const row = (await singlestore.select({ count: count() }).from(table)).at(0);
+    result[name] = row?.count ?? 0;
+  }
+
+  return result;
+};
+
+export const queries: BenchmarkQueries = {
   getTransactionsSum: async () => {
     const result = await singlestore
       .select({ sum: sum(transactionsTable.amount) })

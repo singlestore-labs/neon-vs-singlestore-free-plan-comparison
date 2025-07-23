@@ -1,12 +1,24 @@
-import type { BenchmarkQueries } from "@repo/benchmark/types";
+import type { BenchmarkQueries, BenchmarkTableRowCountQuery } from "@repo/benchmark/types";
 import { neon } from "@repo/neon/index";
+import * as schema from "@repo/neon/schema";
 import { accountsTable } from "@repo/neon/schemas/account";
 import { transactionsTable, transactionStatusesTable, transactionTypesTable } from "@repo/neon/schemas/transaction";
 import { usersTable } from "@repo/neon/schemas/user";
 import { subDays } from "date-fns";
 import { and, asc, count, desc, eq, gt, gte, sql, sum } from "drizzle-orm";
 
-export const benchmarkQueries: BenchmarkQueries = {
+export const tableRowCountQuery: BenchmarkTableRowCountQuery = async () => {
+  const result: Awaited<ReturnType<BenchmarkTableRowCountQuery>> = {};
+
+  for (const [name, table] of Object.entries(schema)) {
+    const row = (await neon.select({ count: count() }).from(table)).at(0);
+    result[name] = row?.count ?? 0;
+  }
+
+  return result;
+};
+
+export const queries: BenchmarkQueries = {
   getTransactionsSum: async () => {
     const result = await neon
       .select({ sum: sum(transactionsTable.amount) })

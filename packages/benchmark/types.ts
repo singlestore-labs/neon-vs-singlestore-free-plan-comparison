@@ -3,6 +3,8 @@ import type { TransactionRecord, TransactionTypeRecord } from "@repo/types/trans
 import type { UserRecord } from "@repo/types/user";
 import type { Merge } from "@repo/types/utils";
 
+export type BenchmarkTableRowCountQuery = () => Promise<Record<string, number>>;
+
 export type BenchmarkQueries = {
   getTransactionsSum: () => Promise<number>;
 
@@ -31,11 +33,12 @@ export type BenchmarkConfig = {
   version?: string;
 };
 
-export type BenchmarkQueryResults = Record<string, number[]>;
+export type BenchmarkQueryResults = Record<string, (number | null)[]>;
 
 export type BenchmarkResult = Merge<
   BenchmarkConfig & {
     date: string;
+    tableRowCount: Awaited<ReturnType<BenchmarkTableRowCountQuery>>;
     queryResults: BenchmarkQueryResults;
   }
 >;

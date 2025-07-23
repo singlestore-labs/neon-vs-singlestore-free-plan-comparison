@@ -1,5 +1,5 @@
 import type { BenchmarkConfig } from "@repo/benchmark/types";
 
-export const benchmarkConfig: BenchmarkConfig = {
+export const config: BenchmarkConfig = {
   title: "Neon (Free)",
 };
