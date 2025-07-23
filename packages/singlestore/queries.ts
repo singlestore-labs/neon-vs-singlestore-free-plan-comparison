@@ -5,14 +5,14 @@ import { accountsTable } from "@repo/singlestore/schemas/account";
 import { transactionsTable, transactionStatusesTable, transactionTypesTable } from "@repo/singlestore/schemas/transaction";
 import { usersTable } from "@repo/singlestore/schemas/user";
 import { subDays } from "date-fns";
-import { and, asc, count, desc, eq, gt, gte, sql, sum } from "drizzle-orm";
+import { and, asc, count, desc, eq, getTableName, gt, gte, sql, sum } from "drizzle-orm";
 
 export const tableRowCountQuery: BenchmarkTableRowCountQuery = async () => {
   const result: Awaited<ReturnType<BenchmarkTableRowCountQuery>> = {};
 
-  for (const [name, table] of Object.entries(schema)) {
+  for (const table of Object.values(schema)) {
     const row = (await singlestore.select({ count: count() }).from(table)).at(0);
-    result[name] = row?.count ?? 0;
+    result[getTableName(table)] = row?.count ?? 0;
   }
 
   return result;
