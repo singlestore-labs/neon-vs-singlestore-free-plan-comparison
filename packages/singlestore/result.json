@@ -1,7 +1,8 @@
 {
   "title": "SingleStore (Free Shared Tier)",
   "version": "8.9.0",
-  "date": "2025-07-23T23:46:03.222Z",
+  "date": "2025-07-24T18:48:56.180Z",
+  "databaseSchema": "CREATE TABLE `accounts` (\n  `id` bigint(20) NOT NULL,\n  `user_id` bigint(20) NOT NULL,\n  `balance` decimal(18,2) DEFAULT NULL,\n  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`),\n  SHARD KEY `__SHARDKEY` (`id`),\n  SORT KEY `__UNORDERED` (),\n  KEY `user_id_idx` (`user_id`) USING HASH\n) AUTOSTATS_CARDINALITY_MODE=INCREMENTAL AUTOSTATS_HISTOGRAM_MODE=CREATE AUTOSTATS_SAMPLING=ON SQL_MODE='STRICT_ALL_TABLES,NO_AUTO_CREATE_USER';\n\nCREATE TABLE `transaction_statuses` (\n  `id` bigint(20) NOT NULL,\n  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,\n  PRIMARY KEY (`id`),\n  SHARD KEY `__SHARDKEY` (`id`),\n  SORT KEY `__UNORDERED` ()\n) AUTOSTATS_CARDINALITY_MODE=INCREMENTAL AUTOSTATS_HISTOGRAM_MODE=CREATE AUTOSTATS_SAMPLING=ON SQL_MODE='STRICT_ALL_TABLES,NO_AUTO_CREATE_USER';\n\nCREATE TABLE `transaction_types` (\n  `id` bigint(20) NOT NULL,\n  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,\n  PRIMARY KEY (`id`),\n  SHARD KEY `__SHARDKEY` (`id`),\n  SORT KEY `__UNORDERED` ()\n) AUTOSTATS_CARDINALITY_MODE=INCREMENTAL AUTOSTATS_HISTOGRAM_MODE=CREATE AUTOSTATS_SAMPLING=ON SQL_MODE='STRICT_ALL_TABLES,NO_AUTO_CREATE_USER';\n\nCREATE TABLE `transactions` (\n  `id` bigint(20) NOT NULL,\n  `account_id_from` bigint(20) DEFAULT NULL,\n  `account_id_to` bigint(20) DEFAULT NULL,\n  `transaction_type_id` bigint(20) NOT NULL,\n  `transaction_status_id` bigint(20) NOT NULL,\n  `amount` decimal(18,2) DEFAULT NULL,\n  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`),\n  SHARD KEY `__SHARDKEY` (`id`),\n  SORT KEY `__UNORDERED` (),\n  KEY `account_id_from_idx` (`account_id_from`) USING HASH,\n  KEY `account_id_to_idx` (`account_id_to`) USING HASH,\n  KEY `type_status_idx` (`transaction_type_id`,`transaction_status_id`) USING HASH\n) AUTOSTATS_CARDINALITY_MODE=INCREMENTAL AUTOSTATS_HISTOGRAM_MODE=CREATE AUTOSTATS_SAMPLING=ON SQL_MODE='STRICT_ALL_TABLES,NO_AUTO_CREATE_USER';\n\nCREATE TABLE `users` (\n  `id` bigint(20) NOT NULL,\n  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,\n  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,\n  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`),\n  SHARD KEY `__SHARDKEY` (`id`),\n  SORT KEY `__UNORDERED` ()\n) AUTOSTATS_CARDINALITY_MODE=INCREMENTAL AUTOSTATS_HISTOGRAM_MODE=CREATE AUTOSTATS_SAMPLING=ON SQL_MODE='STRICT_ALL_TABLES,NO_AUTO_CREATE_USER'",
   "tableRowCount": {
     "accounts": 10,
     "transaction_statuses": 3,
@@ -11,25 +12,25 @@
   },
   "queryResults": {
     "getTransactionsSum": [
-      515.337542,
-      105.57179199999996,
-      106.65183400000001,
-      107.43437500000005,
-      108.00129100000004
+      775.82025,
+      105.60195799999997,
+      107.28354099999979,
+      104.69941700000004,
+      106.13429200000019
     ],
     "listTopRecipients": [
-      98.38691700000004,
-      95.58149999999978,
-      93.019542,
-      96.43554199999971,
-      94.2319580000003
+      154.46633299999985,
+      95.66291699999965,
+      96.35433300000022,
+      95.51258299999972,
+      95.69624999999996
     ],
     "listRecentTransactionsWithInfo": [
-      220.94608400000016,
-      207.46029100000032,
-      207.10204199999998,
-      210.346,
-      219.604292
+      264.8662089999998,
+      201.7927080000004,
+      198.63758299999972,
+      200.73291699999982,
+      199.17437500000005
     ]
   }
 }

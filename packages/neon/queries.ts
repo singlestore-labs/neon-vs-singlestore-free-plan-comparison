@@ -1,4 +1,7 @@
-import type { BenchmarkQueries, BenchmarkTableRowCountQuery } from "@repo/benchmark/types";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
+import type { BenchmarkDatabaseSchemaQuery, BenchmarkQueries, BenchmarkTableRowCountQuery } from "@repo/benchmark/types";
 import { neon } from "@repo/neon/index";
 import * as schema from "@repo/neon/schema";
 import { accountsTable } from "@repo/neon/schemas/account";
@@ -6,6 +9,10 @@ import { transactionsTable, transactionStatusesTable, transactionTypesTable } fr
 import { usersTable } from "@repo/neon/schemas/user";
 import { subDays } from "date-fns";
 import { and, asc, count, desc, eq, getTableName, gt, gte, sql, sum } from "drizzle-orm";
+
+export const databaseSchemaQuery: BenchmarkDatabaseSchemaQuery = async () => {
+  return readFileSync(resolve("./schema.sql"), "utf-8");
+};
 
 export const tableRowCountQuery: BenchmarkTableRowCountQuery = async () => {
   const result: Awaited<ReturnType<BenchmarkTableRowCountQuery>> = {};

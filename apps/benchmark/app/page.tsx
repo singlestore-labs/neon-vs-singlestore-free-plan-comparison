@@ -88,6 +88,8 @@ export default async function PageHome() {
                 avgQueryTimes={systemAvgQueryTimes[result.title] ?? {}}
                 queryMaxAvgTimes={queryMaxAvgTimes}
                 queryXTimes={systemQueryXTimes[result.title] ?? {}}
+                databaseSchema={result.databaseSchema}
+                tableRowCount={result.tableRowCount}
               />
             ))}
           </ResultList>

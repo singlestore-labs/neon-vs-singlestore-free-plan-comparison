@@ -1,10 +1,10 @@
 import { runBenchmark } from "@repo/benchmark/run";
 import { config } from "@repo/singlestore/config";
-import { queries, tableRowCountQuery } from "@repo/singlestore/queries";
+import { databaseSchemaQuery, queries, tableRowCountQuery } from "@repo/singlestore/queries";
 
 (async () => {
   try {
-    await runBenchmark(config, queries, tableRowCountQuery);
+    await runBenchmark(config, queries, databaseSchemaQuery, tableRowCountQuery);
     process.exit(0);
   } catch (error) {
     console.error(error);

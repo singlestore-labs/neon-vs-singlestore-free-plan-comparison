@@ -1,4 +1,4 @@
-import type { BenchmarkQueries, BenchmarkTableRowCountQuery } from "@repo/benchmark/types";
+import type { BenchmarkDatabaseSchemaQuery, BenchmarkQueries, BenchmarkTableRowCountQuery } from "@repo/benchmark/types";
 import { singlestore } from "@repo/singlestore/index";
 import * as schema from "@repo/singlestore/schema";
 import { accountsTable } from "@repo/singlestore/schemas/account";
@@ -6,6 +6,17 @@ import { transactionsTable, transactionStatusesTable, transactionTypesTable } fr
 import { usersTable } from "@repo/singlestore/schemas/user";
 import { subDays } from "date-fns";
 import { and, asc, count, desc, eq, getTableName, gt, gte, sql, sum } from "drizzle-orm";
+
+export const databaseSchemaQuery: BenchmarkDatabaseSchemaQuery = async () => {
+  const result: Awaited<ReturnType<BenchmarkDatabaseSchemaQuery>>[] = [];
+
+  for (const table of Object.values(schema)) {
+    const row = (await singlestore.execute(sql`SHOW CREATE TABLE ${table}`)).at(0) as unknown as [{ "Create Table": string }];
+    result.push(row[0]["Create Table"]);
+  }
+
+  return result.join(";\n\n");
+};
 
 export const tableRowCountQuery: BenchmarkTableRowCountQuery = async () => {
   const result: Awaited<ReturnType<BenchmarkTableRowCountQuery>> = {};

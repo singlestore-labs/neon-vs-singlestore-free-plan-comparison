@@ -3,6 +3,7 @@ import path from "node:path";
 
 import type {
   BenchmarkConfig,
+  BenchmarkDatabaseSchemaQuery,
   BenchmarkQueries,
   BenchmarkQueryResults,
   BenchmarkResult,
@@ -14,6 +15,7 @@ const DEFAULT_TRIES = 5;
 export async function runBenchmark(
   config: BenchmarkConfig,
   queries: BenchmarkQueries,
+  databaseSchemaQuery: BenchmarkDatabaseSchemaQuery,
   tableRowCountQuery: BenchmarkTableRowCountQuery,
 ): Promise<BenchmarkResult> {
   const resultsPath = path.resolve(path.dirname(process.argv[1] ?? ""), "../");
@@ -45,6 +47,7 @@ export async function runBenchmark(
   const result: BenchmarkResult = {
     ...config,
     date: new Date().toISOString(),
+    databaseSchema: await databaseSchemaQuery(),
     tableRowCount: await tableRowCountQuery(),
     queryResults,
   };

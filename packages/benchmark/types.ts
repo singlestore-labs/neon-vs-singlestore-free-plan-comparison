@@ -3,6 +3,8 @@ import type { TransactionRecord, TransactionTypeRecord } from "@repo/types/trans
 import type { UserRecord } from "@repo/types/user";
 import type { Merge } from "@repo/types/utils";
 
+export type BenchmarkDatabaseSchemaQuery = () => Promise<string>;
+
 export type BenchmarkTableRowCountQuery = () => Promise<Record<string, number>>;
 
 export type BenchmarkQueries = {
@@ -38,6 +40,7 @@ export type BenchmarkQueryResults = Record<string, (number | null)[]>;
 export type BenchmarkResult = Merge<
   BenchmarkConfig & {
     date: string;
+    databaseSchema: Awaited<ReturnType<BenchmarkDatabaseSchemaQuery>>;
     tableRowCount: Awaited<ReturnType<BenchmarkTableRowCountQuery>>;
     queryResults: BenchmarkQueryResults;
   }

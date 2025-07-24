@@ -1,6 +1,7 @@
 {
   "title": "Neon (Free)",
-  "date": "2025-07-23T23:46:37.180Z",
+  "date": "2025-07-24T18:48:41.534Z",
+  "databaseSchema": "--\n-- PostgreSQL database dump\n--\n\n-- Dumped from database version 17.5\n-- Dumped by pg_dump version 17.5 (Homebrew)\n\nSET statement_timeout = 0;\nSET lock_timeout = 0;\nSET idle_in_transaction_session_timeout = 0;\nSET transaction_timeout = 0;\nSET client_encoding = 'UTF8';\nSET standard_conforming_strings = on;\nSELECT pg_catalog.set_config('search_path', '', false);\nSET check_function_bodies = false;\nSET xmloption = content;\nSET client_min_messages = warning;\nSET row_security = off;\n\nSET default_table_access_method = heap;\n\n--\n-- Name: accounts; Type: TABLE; Schema: public; Owner: -\n--\n\nCREATE TABLE public.accounts (\n    id bigint NOT NULL,\n    user_id bigint NOT NULL,\n    balance numeric(18,2),\n    created_at timestamp without time zone DEFAULT now() NOT NULL,\n    updated_at timestamp without time zone DEFAULT now() NOT NULL\n);\n\n\n--\n-- Name: transaction_statuses; Type: TABLE; Schema: public; Owner: -\n--\n\nCREATE TABLE public.transaction_statuses (\n    id bigint NOT NULL,\n    name character varying(255) NOT NULL\n);\n\n\n--\n-- Name: transaction_types; Type: TABLE; Schema: public; Owner: -\n--\n\nCREATE TABLE public.transaction_types (\n    id bigint NOT NULL,\n    name character varying(255) NOT NULL\n);\n\n\n--\n-- Name: transactions; Type: TABLE; Schema: public; Owner: -\n--\n\nCREATE TABLE public.transactions (\n    id bigint NOT NULL,\n    account_id_from bigint,\n    account_id_to bigint,\n    transaction_type_id bigint NOT NULL,\n    transaction_status_id bigint NOT NULL,\n    amount numeric(18,2),\n    created_at timestamp without time zone DEFAULT now() NOT NULL\n);\n\n\n--\n-- Name: users; Type: TABLE; Schema: public; Owner: -\n--\n\nCREATE TABLE public.users (\n    id bigint NOT NULL,\n    name character varying(255),\n    email character varying(255),\n    created_at timestamp without time zone DEFAULT now() NOT NULL,\n    updated_at timestamp without time zone DEFAULT now() NOT NULL\n);\n\n\n--\n-- Name: accounts accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -\n--\n\nALTER TABLE ONLY public.accounts\n    ADD CONSTRAINT accounts_pkey PRIMARY KEY (id);\n\n\n--\n-- Name: transaction_statuses transaction_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -\n--\n\nALTER TABLE ONLY public.transaction_statuses\n    ADD CONSTRAINT transaction_statuses_pkey PRIMARY KEY (id);\n\n\n--\n-- Name: transaction_types transaction_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -\n--\n\nALTER TABLE ONLY public.transaction_types\n    ADD CONSTRAINT transaction_types_pkey PRIMARY KEY (id);\n\n\n--\n-- Name: transactions transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: -\n--\n\nALTER TABLE ONLY public.transactions\n    ADD CONSTRAINT transactions_pkey PRIMARY KEY (id);\n\n\n--\n-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -\n--\n\nALTER TABLE ONLY public.users\n    ADD CONSTRAINT users_pkey PRIMARY KEY (id);\n\n\n--\n-- Name: DEFAULT PRIVILEGES FOR SEQUENCES; Type: DEFAULT ACL; Schema: public; Owner: -\n--\n\nALTER DEFAULT PRIVILEGES FOR ROLE cloud_admin IN SCHEMA public GRANT ALL ON SEQUENCES TO neon_superuser WITH GRANT OPTION;\n\n\n--\n-- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: public; Owner: -\n--\n\nALTER DEFAULT PRIVILEGES FOR ROLE cloud_admin IN SCHEMA public GRANT ALL ON TABLES TO neon_superuser WITH GRANT OPTION;\n\n\n--\n-- PostgreSQL database dump complete\n--\n\n",
   "tableRowCount": {
     "accounts": 10,
     "transaction_statuses": 3,
@@ -10,25 +11,25 @@
   },
   "queryResults": {
     "getTransactionsSum": [
-      1910.7432500000002,
-      494.15620899999976,
-      574.4102080000002,
-      512.2499590000002,
-      545.5774169999995
+      1739.9797910000002,
+      498.91604099999995,
+      587.326208,
+      507.60291700000016,
+      514.9312920000002
     ],
     "listTopRecipients": [
-      520.3406669999995,
-      572.2901670000001,
-      616.9963339999995,
-      523.0458330000001,
-      525.2793339999998
+      612.6757089999992,
+      614.4160830000001,
+      545.2681249999996,
+      686.8907499999996,
+      610.0034160000005
     ],
     "listRecentTransactionsWithInfo": [
-      4688.426208,
-      4723.554333,
-      4701.539583000002,
-      4649.085708999999,
-      2767.7782920000027
+      4710.708208,
+      4819.6876250000005,
+      4809.977209000001,
+      4810.985165999999,
+      2632.050500000001
     ]
   }
 }

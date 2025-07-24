@@ -2,6 +2,8 @@ import { cn } from "@repo/ui/lib/utils";
 import ms from "pretty-ms";
 import type { ComponentProps } from "react";
 
+import { Accordion } from "@/components/accordion";
+import { Pre } from "@/components/pre";
 import { ResultBar } from "@/components/result/bar";
 import { QUERY_TITLE_MAP } from "@/constants";
 
@@ -15,6 +17,8 @@ export type ResultListItemProps = ComponentProps<"li"> & {
   avgQueryTimes: Record<string, number>;
   queryMaxAvgTimes: Record<string, number>;
   queryXTimes: Record<string, number>;
+  databaseSchema: string;
+  tableRowCount: Record<string, number>;
 };
 
 export function ResultListItem({
@@ -28,6 +32,8 @@ export function ResultListItem({
   avgQueryTimes,
   queryMaxAvgTimes,
   queryXTimes,
+  databaseSchema,
+  tableRowCount,
   ...props
 }: ResultListItemProps) {
   return (
@@ -56,29 +62,38 @@ export function ResultListItem({
         </div>
 
         <ul className="mt-2 flex flex-col text-sm md:gap-2">
-          {Object.entries(avgQueryTimes).map(([queryKey, avgTime]) => {
-            return (
-              <li
-                key={queryKey}
-                className="group relative grid gap-4 md:grid-cols-[10rem_1fr]"
-              >
-                <span className="bg-primary/10 absolute top-1/2 left-1/2 hidden h-[calc(100%_+_theme(spacing.1))] w-[calc(100%_+_theme(spacing.4))] -translate-1/2 rounded-xs group-hover:block" />
-                <span>{QUERY_TITLE_MAP[queryKey as keyof typeof QUERY_TITLE_MAP]}</span>
-                <div className="grid items-center gap-4 text-end md:grid-cols-[1fr_8rem]">
-                  <ResultBar
-                    variant={title.startsWith("SingleStore") ? "primary" : "default"}
-                    size="sm"
-                    value={avgTime}
-                    limit={queryMaxAvgTimes[queryKey] ?? 0}
-                  />
-                  <span>
-                    x{queryXTimes[queryKey]} ({ms(avgTime)})
-                  </span>
-                </div>
-              </li>
-            );
-          })}
+          {Object.entries(avgQueryTimes).map(([queryKey, avgTime]) => (
+            <li
+              key={queryKey}
+              className="group relative grid gap-4 md:grid-cols-[10rem_1fr]"
+            >
+              <span className="bg-primary/10 absolute top-1/2 left-1/2 hidden h-[calc(100%_+_theme(spacing.1))] w-[calc(100%_+_theme(spacing.4))] -translate-1/2 rounded-xs group-hover:block" />
+              <span>{QUERY_TITLE_MAP[queryKey as keyof typeof QUERY_TITLE_MAP]}</span>
+              <div className="grid items-center gap-4 text-end md:grid-cols-[1fr_8rem]">
+                <ResultBar
+                  variant={title.startsWith("SingleStore") ? "primary" : "default"}
+                  size="sm"
+                  value={avgTime}
+                  limit={queryMaxAvgTimes[queryKey] ?? 0}
+                />
+                <span>
+                  x{queryXTimes[queryKey]} ({ms(avgTime)})
+                </span>
+              </div>
+            </li>
+          ))}
         </ul>
+
+        <div className="mt-4 flex flex-col gap-4 border-t pt-4">
+          <Accordion
+            triggerChildren="Database schema"
+            contentChildren={<Pre>{databaseSchema}</Pre>}
+          />
+          <Accordion
+            triggerChildren="Table row count"
+            contentChildren={<Pre>{JSON.stringify(tableRowCount, null, 2)}</Pre>}
+          />
+        </div>
       </div>
     </li>
   );
