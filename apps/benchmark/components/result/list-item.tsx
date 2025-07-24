@@ -1,3 +1,5 @@
+import type { BenchmarkQueryResults } from "@repo/benchmark/types";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@repo/ui/components/tooltip";
 import { cn } from "@repo/ui/lib/utils";
 import ms from "pretty-ms";
 import type { ComponentProps } from "react";
@@ -19,6 +21,7 @@ export type ResultListItemProps = ComponentProps<"li"> & {
   queryXTimes: Record<string, number>;
   databaseSchema: string;
   tableRowCount: Record<string, number>;
+  queryResults: BenchmarkQueryResults;
 };
 
 export function ResultListItem({
@@ -34,8 +37,12 @@ export function ResultListItem({
   queryXTimes,
   databaseSchema,
   tableRowCount,
+  queryResults,
   ...props
 }: ResultListItemProps) {
+  const queryKeys = Object.keys(queryResults);
+  const queryTimes = queryResults[queryKeys[0]!]?.length;
+
   return (
     <li
       {...props}
@@ -48,18 +55,31 @@ export function ResultListItem({
       </div>
 
       <div>
-        <div className="group relative grid items-center gap-4 text-end md:grid-cols-[1fr_8rem]">
-          <span className="bg-primary/10 absolute top-1/2 left-1/2 hidden h-[calc(100%_+_theme(spacing.1))] w-[calc(100%_+_theme(spacing.4))] -translate-1/2 rounded-sm group-hover:block" />
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className="group relative grid items-center gap-4 text-end md:grid-cols-[1fr_8rem]">
+              <span className="bg-primary/10 pointer-events-none absolute top-1/2 left-1/2 hidden h-[calc(100%_+_theme(spacing.1))] w-[calc(100%_+_theme(spacing.4))] -translate-1/2 rounded-sm group-hover:block" />
 
-          <ResultBar
-            variant={title.startsWith("SingleStore") ? "primary" : "default"}
-            value={avgTime}
-            limit={maxAvgTime}
-          />
-          <span>
-            x{x} ({ms(avgTime)})
-          </span>
-        </div>
+              <ResultBar
+                variant={title.startsWith("SingleStore") ? "primary" : "default"}
+                value={avgTime}
+                limit={maxAvgTime}
+              />
+              <span>
+                x{x} ({ms(avgTime)})
+              </span>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent className="py-3">
+            <ul className="list-disc pl-3">
+              <li>Displays mean of average times.</li>
+              <li>
+                Average over {queryKeys.length} queries, each executed {queryTimes} times.
+              </li>
+              <li>Compared to the slowest system&apos;s aggregate average.</li>
+            </ul>
+          </TooltipContent>
+        </Tooltip>
 
         <ul className="mt-2 flex flex-col text-sm md:gap-2">
           {Object.entries(avgQueryTimes).map(([queryKey, avgTime]) => (
@@ -69,17 +89,29 @@ export function ResultListItem({
             >
               <span className="bg-primary/10 absolute top-1/2 left-1/2 hidden h-[calc(100%_+_theme(spacing.1))] w-[calc(100%_+_theme(spacing.4))] -translate-1/2 rounded-xs group-hover:block" />
               <span>{QUERY_TITLE_MAP[queryKey as keyof typeof QUERY_TITLE_MAP]}</span>
-              <div className="grid items-center gap-4 text-end md:grid-cols-[1fr_8rem]">
-                <ResultBar
-                  variant={title.startsWith("SingleStore") ? "primary" : "default"}
-                  size="sm"
-                  value={avgTime}
-                  limit={queryMaxAvgTimes[queryKey] ?? 0}
-                />
-                <span>
-                  x{queryXTimes[queryKey]} ({ms(avgTime)})
-                </span>
-              </div>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="grid items-center gap-4 text-end md:grid-cols-[1fr_8rem]">
+                    <ResultBar
+                      variant={title.startsWith("SingleStore") ? "primary" : "default"}
+                      size="sm"
+                      value={avgTime}
+                      limit={queryMaxAvgTimes[queryKey] ?? 0}
+                    />
+                    <span>
+                      x{queryXTimes[queryKey]} ({ms(avgTime)})
+                    </span>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent className="py-3">
+                  <ul className="list-disc pl-3">
+                    <li>Executed {queryTimes} times.</li>
+                    <li>Displays average time for this query.</li>
+                    <li>Compared to the slowest average for this query across all systems.</li>
+                  </ul>
+                </TooltipContent>
+              </Tooltip>
             </li>
           ))}
         </ul>

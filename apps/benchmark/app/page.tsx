@@ -72,7 +72,7 @@ export default async function PageHome() {
         <CardContent>
           <div className="grid grid-cols-[16rem_1fr] gap-4">
             <span className="font-medium">System</span>
-            <span className="font-medium">Relative Time (lower is better)</span>
+            <span className="font-medium">Aggregate Performance</span>
           </div>
 
           <ResultList className="mt-6">
@@ -82,6 +82,7 @@ export default async function PageHome() {
                 title={result.title}
                 date={result.date}
                 version={result.version}
+                queryResults={result.queryResults}
                 avgTime={systemAvgTimes[result.title] ?? 0}
                 maxAvgTime={systemMaxAvgTime}
                 x={systemXTimes[result.title] ?? 0}
