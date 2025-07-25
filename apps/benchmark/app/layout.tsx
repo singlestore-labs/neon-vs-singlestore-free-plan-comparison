@@ -23,8 +23,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       suppressHydrationWarning
     >
       <body className="text-foreground bg-background flex min-h-screen flex-col gap-y-8">
-        <header className="container mx-auto mt-8 px-4">
-          <Card>
+        <header className="container mx-auto px-4">
+          <Card className="rounded-t-none">
             <CardContent className="flex justify-between gap-4">
               <h1 className="text-2xl font-semibold text-balance">{TITLE}</h1>
               <Button asChild>
