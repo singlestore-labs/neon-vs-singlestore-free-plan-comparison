@@ -11,7 +11,7 @@ export const METADATA = {
 export const GITHUB_REPOSITORY_URL = "https://github.com/singlestore-labs/neon-vs-singlestore-free-plan-comparison";
 
 export const HEADER_CTA_URL =
-  "https://portal.singlestore.com/intention/cloud?utm_source=yaroslav&utm_medium=app&utm_campaign=general-technical&utm_content=neon-vs-singlestore-free-plan-comparison";
+  "https://portal.singlestore.com/intention/cloud?utm_source=yaroslav&utm_medium=app&utm_campaign=general-technical&utm_content=neon-vs-singlestore-free-plan-comparison-35m-rows";
 
 export const QUERY_KEY_MAP = {
   GET_TRANSACTIONS_SUM: "getTransactionsSum",
